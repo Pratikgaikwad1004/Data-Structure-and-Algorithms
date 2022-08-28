@@ -58,31 +58,6 @@ struct my_array *insert_at_index(int data, int index)
     return arr;
 }
 
-struct my_array *insert_in_sorted(int data)
-{
-    if (arr->use_size >= arr->total_size)
-    {
-        cout << "Array is full" << endl;
-    }
-    else
-    {
-        for (int i = 0; i < arr->use_size; i++)
-        {
-            if (arr->ptr[i] > data)
-            {
-                for (int j = arr->use_size - 1; j >= i; j--)
-                {
-                    arr->ptr[i + 1] = arr->ptr[i];
-                }
-                arr->ptr[i] = data;
-                arr->use_size += 1;
-                break;
-            }
-        }
-    }
-    return arr;
-}
-
 int main()
 {
     int in = 0;
@@ -95,7 +70,6 @@ int main()
         cout << "2. Insert in Array." << endl;
         cout << "3. Display Array." << endl;
         cout << "4. Insert at index." << endl;
-        cout << "5. Insert in sorted." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -119,11 +93,6 @@ int main()
             cout << "Enter index - " << endl;
             cin >> b;
             insert_at_index(a, b);
-            break;
-        case 5:
-            cout << "Enter element - " << endl;
-            cin >> a;
-            insert_in_sorted(a);
             break;
         case 0:
             in = 1;
