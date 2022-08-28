@@ -23,6 +23,7 @@ struct my_array *create_array(int t_size, int u_size)
         cin >> n;
         arr->ptr[i] = n;
     }
+    cout << "Array created." << endl;
     return arr;
 }
 
@@ -49,6 +50,7 @@ struct my_array *insert_at_index(int data, int index)
         }
         arr->ptr[index] = data;
         arr->use_size += 1;
+        cout << "Element inserted." << endl;
     }
     return arr;
 }
@@ -60,7 +62,29 @@ struct my_array *delete_at_index(int index)
         arr->ptr[i] = arr->ptr[i + 1];
     }
     arr->use_size -= 1;
+    cout << "Element deleted." << endl;
     return arr;
+}
+
+void linear_search(int data)
+{
+    bool element = false;
+    for (int i = 0; i < arr->use_size; i++)
+    {
+        if (arr->ptr[i] == data)
+        {
+            element = true;
+            break;
+        }
+    }
+    if (element)
+    {
+        cout << "Element found." << endl;
+    }
+    else
+    {
+        cout << "Element not found." << endl;
+    }
 }
 
 int main()
@@ -75,6 +99,7 @@ int main()
         cout << "2. Display Array." << endl;
         cout << "3. Insert at index." << endl;
         cout << "4. Delete at index." << endl;
+        cout << "5. Linear search." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -100,6 +125,11 @@ int main()
             cout << "Enter index - " << endl;
             cin >> a;
             delete_at_index(a);
+            break;
+        case 5:
+            cout << "Enter element - " << endl;
+            cin >> a;
+            linear_search(a);
             break;
         case 0:
             in = 1;
