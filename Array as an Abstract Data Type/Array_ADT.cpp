@@ -16,6 +16,13 @@ struct my_array *create_array(int t_size, int u_size)
     p->use_size = u_size;
     p->ptr = (int *)malloc(t_size * sizeof(int));
     arr = p;
+    int n;
+    for (int i = 0; i < arr->use_size; i++)
+    {
+        cout << "Enter Element - " << endl;
+        cin >> n;
+        arr->ptr[i] = n;
+    }
     return arr;
 }
 
@@ -26,18 +33,6 @@ void show()
     {
         cout << arr->ptr[i] << " ";
     }
-}
-
-struct my_array *set_value()
-{
-    int n;
-    for (int i = 0; i < arr->use_size; i++)
-    {
-        cout << "Enter Element - " << endl;
-        cin >> n;
-        arr->ptr[i] = n;
-    }
-    return arr;
 }
 
 struct my_array *insert_at_index(int data, int index)
@@ -58,6 +53,16 @@ struct my_array *insert_at_index(int data, int index)
     return arr;
 }
 
+struct my_array *delete_at_index(int index)
+{
+    for (int i = index; i < arr->use_size - 1; i++)
+    {
+        arr->ptr[i] = arr->ptr[i + 1];
+    }
+    arr->use_size -= 1;
+    return arr;
+}
+
 int main()
 {
     int in = 0;
@@ -67,9 +72,9 @@ int main()
         cout << "\n \n"
              << endl;
         cout << "1. Create Array." << endl;
-        cout << "2. Insert in Array." << endl;
-        cout << "3. Display Array." << endl;
-        cout << "4. Insert at index." << endl;
+        cout << "2. Display Array." << endl;
+        cout << "3. Insert at index." << endl;
+        cout << "4. Delete at index." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -82,17 +87,19 @@ int main()
             create_array(a, b);
             break;
         case 2:
-            set_value();
-            break;
-        case 3:
             show();
             break;
-        case 4:
+        case 3:
             cout << "Enter element - " << endl;
             cin >> a;
             cout << "Enter index - " << endl;
             cin >> b;
             insert_at_index(a, b);
+            break;
+        case 4:
+            cout << "Enter index - " << endl;
+            cin >> a;
+            delete_at_index(a);
             break;
         case 0:
             in = 1;
