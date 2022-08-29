@@ -102,6 +102,31 @@ struct Node *delete_at_index(int index)
     return head;
 }
 
+void search(int data)
+{
+    struct Node *ptr = head;
+    int i = 0;
+    bool element = false;
+    while (ptr != NULL)
+    {
+        if (ptr->data == data)
+        {
+            element = true;
+            break;
+        }
+        ptr = ptr->next;
+        i++;
+    }
+    if (element)
+    {
+        cout << data << " found at index " << i << endl;
+    }
+    else
+    {
+        cout << data << " Not found." << endl;
+    }
+}
+
 void display()
 {
     struct Node *ptr = head;
@@ -128,6 +153,7 @@ int main()
         cout << "6. Delete first node." << endl;
         cout << "7. Delete last node." << endl;
         cout << "8. Delete at index." << endl;
+        cout << "9. Search in linked list." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -176,6 +202,11 @@ int main()
             cout << "Enter index - " << endl;
             cin >> a;
             delete_at_index(a);
+            break;
+        case 9:
+            cout << "Enter element you want to search - " << endl;
+            cin >> a;
+            search(a);
             break;
         default:
             cout << "Invalid Input.";
