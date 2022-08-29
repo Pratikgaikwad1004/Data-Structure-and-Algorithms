@@ -23,7 +23,7 @@ struct Node *insert_at_first(int data)
     newnode->data = data;
     newnode->next = head;
     head = newnode;
-    cout << "Element inserted." << endl;
+    cout << data << " inserted at first." << endl;
     return head;
 }
 
@@ -38,6 +38,7 @@ struct Node *insert_at_last(int data)
     }
     ptr->next = newnode;
     newnode->next = NULL;
+    cout << data << " inserted at last." << endl;
     return head;
 }
 
@@ -56,6 +57,48 @@ struct Node *insert_at_index(int data, int index)
     }
     newnode->next = q;
     p->next = newnode;
+    cout << data << " inserted at index. " << index << endl;
+    return head;
+}
+
+struct Node *delete_first_node()
+{
+    struct Node *ptr = head;
+    head = ptr->next;
+    cout << ptr->data << " is deleted. " << endl;
+    free(ptr);
+    return head;
+}
+
+struct Node *delete_last_node()
+{
+    struct Node *p = head;
+    struct Node *q = head->next;
+    while (q->next != NULL)
+    {
+        p = p->next;
+        q = q->next;
+    }
+    p->next = NULL;
+    cout << q->data << " is deleted.";
+    free(q);
+    return head;
+}
+
+struct Node *delete_at_index(int index)
+{
+    int i = 1;
+    struct Node *p = head;
+    struct Node *q = head->next;
+    while (i < index)
+    {
+        p = p->next;
+        q = q->next;
+        i++;
+    }
+    p->next = q->next;
+    cout << q->data << " is deleted." << endl;
+    free(q);
     return head;
 }
 
@@ -82,6 +125,9 @@ int main()
         cout << "3. Insert at first." << endl;
         cout << "4. Insert at last." << endl;
         cout << "5. Insert at index." << endl;
+        cout << "6. Delete first node." << endl;
+        cout << "7. Delete last node." << endl;
+        cout << "8. Delete at index." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -119,6 +165,17 @@ int main()
             cout << "Enter index - " << endl;
             cin >> b;
             insert_at_index(a, b);
+            break;
+        case 6:
+            delete_first_node();
+            break;
+        case 7:
+            delete_last_node();
+            break;
+        case 8:
+            cout << "Enter index - " << endl;
+            cin >> a;
+            delete_at_index(a);
             break;
         default:
             cout << "Invalid Input.";
