@@ -69,17 +69,54 @@ struct my_array *delete_at_index(int index)
 void linear_search(int data)
 {
     bool element = false;
+    int index = 0;
     for (int i = 0; i < arr->use_size; i++)
     {
         if (arr->ptr[i] == data)
         {
             element = true;
+            index = i;
             break;
         }
     }
     if (element)
     {
-        cout << "Element found." << endl;
+        cout << "Element found at index " << index << endl;
+    }
+    else
+    {
+        cout << "Element not found." << endl;
+    }
+}
+
+void binary_search(int data)
+{
+    int low, mid, high;
+    low = 0;
+    high = arr->use_size - 1;
+    bool element = false;
+    int index = 0;
+    while (low <= high)
+    {
+        mid = (low + high) / 2;
+        if (arr->ptr[mid] == data)
+        {
+            element = true;
+            index = mid;
+            break;
+        }
+        else if (arr->ptr[mid] < data)
+        {
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+    if (element)
+    {
+        cout << "Element found at index " << index << endl;
     }
     else
     {
@@ -100,6 +137,7 @@ int main()
         cout << "3. Insert at index." << endl;
         cout << "4. Delete at index." << endl;
         cout << "5. Linear search." << endl;
+        cout << "6. Binary search." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -130,6 +168,11 @@ int main()
             cout << "Enter element - " << endl;
             cin >> a;
             linear_search(a);
+            break;
+        case 6:
+            cout << "Enter element - " << endl;
+            cin >> a;
+            binary_search(a);
             break;
         case 0:
             in = 1;
