@@ -3,7 +3,7 @@ using namespace std;
 
 struct Node
 {
-    int data;
+    char data;
     struct Node *next;
 };
 
@@ -34,7 +34,7 @@ int isEmpty()
     }
 }
 
-struct Node *push(int data)
+struct Node *push(char data)
 {
     if (isFull())
     {
@@ -50,8 +50,9 @@ struct Node *push(int data)
     return top;
 }
 
-struct Node *pop()
+char pop()
 {
+    char n;
     if (isEmpty())
     {
         cout << "\nStack Underflow." << endl;
@@ -60,26 +61,44 @@ struct Node *pop()
     {
         struct Node *ptr = top;
         top = top->next;
+        n = ptr->data;
         free(ptr);
     }
-    return top;
+    return n;
+}
+
+int match(char a, char b)
+{
+    if ((a == '{' && b == '}') || (a == '[' && b == ']') || (a == '(' && b == ')'))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 int parenthesis_matching(char *exp)
 {
+    char element;
     for (int i = 0; exp[i] != '\0'; i++)
     {
-        if (exp[i] == '(')
+        if (exp[i] == '(' || exp[i] == '[' || exp[i] == '{')
         {
-            push(1);
+            push(exp[i]);
         }
-        else if (exp[i] == ')')
+        else if (exp[i] == ')' || exp[i] == ']' || exp[i] == '}')
         {
             if (isEmpty())
             {
                 return false;
             }
-            pop();
+            element = pop();
+            if (!match(element, exp[i]))
+            {
+                return false;
+            }
         }
     }
 
@@ -95,15 +114,17 @@ int parenthesis_matching(char *exp)
 
 int main()
 {
-    char *exp = "((1+1))";
+    char *exp = "({([1+1])})";
 
     if (parenthesis_matching(exp))
     {
-        cout << "Parenthesis matched." << endl;
+        cout << "\nParenthesis matched.\n"
+             << endl;
     }
     else
     {
-        cout << "Parenthesis not matched." << endl;
+        cout << "\nParenthesis not matched.\n"
+             << endl;
     }
 
     return 0;
