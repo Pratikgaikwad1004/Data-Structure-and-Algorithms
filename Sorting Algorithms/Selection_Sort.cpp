@@ -45,6 +45,7 @@ void selection_sort()
         arr->ptr[i] = arr->ptr[minindex];
         arr->ptr[minindex] = temp;
     }
+    cout << "Array sorted using selection sort." << endl;
 }
 
 void display()
