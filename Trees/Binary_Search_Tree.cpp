@@ -180,6 +180,129 @@ void search(int data)
     }
 }
 
+struct Node *delete_node(int data)
+{
+    struct Node *prev = NULL;
+    struct Node *ptr = root;
+    bool found = false;
+    if (root->data == data)
+    {
+        if (ptr->left == NULL)
+        {
+            root = ptr->right;
+        }
+        else if (ptr->right == NULL)
+        {
+            root = ptr->left;
+        }
+        else
+        {
+            struct Node *l = ptr->left;
+            root = ptr->right;
+            struct Node *r = root;
+            while (r->left != NULL)
+            {
+                r = r->left;
+            }
+            r->left = l;
+        }
+        return root;
+    }
+    while (ptr != NULL)
+    {
+        if (data < ptr->data)
+        {
+            prev = ptr;
+            ptr = ptr->left;
+        }
+        else
+        {
+            prev = ptr;
+            ptr = ptr->right;
+        }
+        if (ptr->data == data)
+        {
+            found = true;
+            struct Node *node_to_be_delete = ptr;
+            if (node_to_be_delete->left == NULL && node_to_be_delete->right == NULL)
+            {
+                if (prev->data > node_to_be_delete->data)
+                {
+                    prev->left = NULL;
+                }
+                else
+                {
+                    prev->right = NULL;
+                }
+                int n = node_to_be_delete->data;
+                free(node_to_be_delete);
+                cout << n << " is deleted." << endl;
+                break;
+            }
+            else
+            {
+                struct Node *l = node_to_be_delete->left;
+                struct Node *r = node_to_be_delete->right;
+                int n = node_to_be_delete->data;
+                if (prev->data > node_to_be_delete->data)
+                {
+                    if (r != NULL)
+                    {
+                        prev->left = r;
+                        while (r->left != NULL)
+                        {
+                            r = r->left;
+                        }
+                        r->left = l;
+                        free(node_to_be_delete);
+                        cout << n << " is deleted." << endl;
+                        break;
+                    }
+                    else
+                    {
+                        prev->left = l;
+                        while (l->right != NULL)
+                        {
+                            l = l->right;
+                        }
+                        l->right = r;
+                        free(node_to_be_delete);
+                        cout << n << " is deleted." << endl;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (r != NULL)
+                    {
+                        prev->right = r;
+                        while (r->left != NULL)
+                        {
+                            r = r->left;
+                        }
+                        r->left = l;
+                        free(node_to_be_delete);
+                        cout << n << " is deleted." << endl;
+                        break;
+                    }
+                    else
+                    {
+                        prev->left = l;
+                        while (l->right != NULL)
+                        {
+                            l = l->right;
+                        }
+                        l->right = r;
+                        free(node_to_be_delete);
+                        cout << n << " is deleted." << endl;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    return root;
+}
 int main()
 {
     int i = 0;
@@ -193,7 +316,8 @@ int main()
         cout << "3. Inorder traversal." << endl;
         cout << "4. Preorder traversal." << endl;
         cout << "5. Postorder traversal." << endl;
-        cout << "6. Search." << endl;
+        cout << "6. Search node." << endl;
+        cout << "7. Delete node." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -219,6 +343,11 @@ int main()
             cout << "Enter node - ";
             cin >> a;
             search(a);
+            break;
+        case 7:
+            cout << "Enter node - ";
+            cin >> a;
+            delete_node(a);
             break;
         case 0:
             i = 1;
