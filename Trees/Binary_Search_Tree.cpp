@@ -10,7 +10,7 @@ struct Node
 
 struct Node *root = NULL;
 
-struct Node *create_tree(int data)
+struct Node *create_node(int data)
 {
     struct Node *newnode = (struct Node *)malloc(sizeof(struct Node));
     newnode->data = data;
@@ -24,12 +24,15 @@ struct Node *create_tree(int data)
     else
     {
         struct Node *ptr = root;
-        string side;
         while (true)
         {
-            cout << "Which size you want insert node 'l' for left side and 'r' for right side - ";
-            cin >> side;
-            if (side == "l")
+            if (data == ptr->data)
+            {
+                cout << "Node already exist." << endl;
+                break;
+            }
+
+            if (data < ptr->data)
             {
                 if (ptr->left == NULL)
                 {
@@ -88,6 +91,14 @@ void post_order(struct Node *ptr)
     }
 }
 
+int power(int base, int a)
+{
+    if (a != 0)
+        return (base * power(base, a - 1));
+    else
+        return 1;
+}
+
 int get_height(struct Node *ptr)
 {
     int height = 0;
@@ -97,20 +108,59 @@ int get_height(struct Node *ptr)
     }
     return height;
 }
+// This is for check tree is BST or Not.
+int height = get_height(root);
+int i = power(2, height) * 2;
+int used_size = 0;
+int *arr = (int *)malloc(i * sizeof(int));
+
+void store_inorder(struct Node *ptr)
+{
+    if (ptr != NULL)
+    {
+        store_inorder(ptr->left);
+        arr[used_size++] = ptr->data;
+        store_inorder(ptr->right);
+    }
+}
+
+void isBST()
+{
+    store_inorder(root);
+    bool bst = true;
+    for (int i = 0; i < used_size-1; i++)
+    {
+        if (arr[i] > arr[i + 1])
+        {
+            bst = false;
+        }
+    }
+    if (bst)
+    {
+        cout << "Tree is BST." << endl;
+    }
+    else
+    {
+        cout << "Tree is not BST." << endl;
+    }
+    used_size = 0;
+}
+
+// Check Tree is BST or Not code completed.
 
 int main()
 {
     int i = 0;
     do
     {
-        int ch, a, b;
+        int a, ch;
         cout << "\n\n"
              << endl;
         cout << "1. Insert node." << endl;
-        cout << "2. Preorder traversal." << endl;
+        cout << "2. Check tree is BST or NOT." << endl;
         cout << "3. Inorder traversal." << endl;
-        cout << "4. Postorder traversal." << endl;
-        cout << "5. Height of tree." << endl;
+        cout << "4. Preorder traversal." << endl;
+        cout << "5. Postorder traversal." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -118,27 +168,29 @@ int main()
         case 1:
             cout << "Enter node - ";
             cin >> a;
-            create_tree(a);
+            create_node(a);
             break;
         case 2:
-            pre_order(root);
+            isBST();
             break;
         case 3:
             in_order(root);
             break;
         case 4:
-            post_order(root);
+            pre_order(root);
             break;
         case 5:
-            cout << "Height of the tree is - " << get_height(root) - 1 << endl;
+            post_order(root);
             break;
         case 0:
             i = 1;
             break;
         default:
-            cout << "Invalid choice." << endl;
+            cout << "Invalid choice" << endl;
             break;
         }
+
     } while (i == 0);
+
     return 0;
 }
