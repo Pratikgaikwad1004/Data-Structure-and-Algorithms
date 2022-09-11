@@ -108,6 +108,7 @@ int get_height(struct Node *ptr)
     }
     return height;
 }
+
 // This is for check tree is BST or Not.
 int height = get_height(root);
 int i = power(2, height) * 2;
@@ -128,7 +129,7 @@ void isBST()
 {
     store_inorder(root);
     bool bst = true;
-    for (int i = 0; i < used_size-1; i++)
+    for (int i = 0; i < used_size - 1; i++)
     {
         if (arr[i] > arr[i + 1])
         {
@@ -148,6 +149,37 @@ void isBST()
 
 // Check Tree is BST or Not code completed.
 
+void search(int data)
+{
+    struct Node *ptr = root;
+    bool found = false;
+    while (ptr != NULL)
+    {
+        if (ptr->data == data)
+        {
+            found = true;
+            break;
+        }
+        if (data < ptr->data)
+        {
+            ptr = ptr->left;
+        }
+        else
+        {
+            ptr = ptr->right;
+        }
+    }
+
+    if (found)
+    {
+        cout << data << " is found." << endl;
+    }
+    else
+    {
+        cout << data << " not found." << endl;
+    }
+}
+
 int main()
 {
     int i = 0;
@@ -161,6 +193,7 @@ int main()
         cout << "3. Inorder traversal." << endl;
         cout << "4. Preorder traversal." << endl;
         cout << "5. Postorder traversal." << endl;
+        cout << "6. Search." << endl;
         cout << "0. Exit." << endl;
         cin >> ch;
         switch (ch)
@@ -181,6 +214,11 @@ int main()
             break;
         case 5:
             post_order(root);
+            break;
+        case 6:
+            cout << "Enter node - ";
+            cin >> a;
+            search(a);
             break;
         case 0:
             i = 1;
